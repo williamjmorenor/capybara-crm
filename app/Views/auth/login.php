@@ -5,7 +5,7 @@
     <div class="card-body p-4 p-sm-5">
         <div class="text-center mb-4">
             <span class="fs-2 fw-bold text-primary"><i class="bi bi-circle-fill me-1"></i>Capybara CRM</span>
-            <p class="text-muted mt-1">Sign in to your account</p>
+            <p class="text-muted mt-1"><?= lang('Crm.sign_in_subtitle') ?></p>
         </div>
 
         <?php if (session()->getFlashdata('success')): ?>
@@ -28,7 +28,7 @@
             <?= csrf_field() ?>
 
             <div class="mb-3">
-                <label for="email" class="form-label fw-semibold">Email Address</label>
+                <label for="email" class="form-label fw-semibold"><?= lang('Crm.email_address') ?></label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                     <input type="email" class="form-control" id="email" name="email"
@@ -38,7 +38,7 @@
             </div>
 
             <div class="mb-4">
-                <label for="password" class="form-label fw-semibold">Password</label>
+                <label for="password" class="form-label fw-semibold"><?= lang('Crm.password') ?></label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
                     <input type="password" class="form-control" id="password" name="password"
@@ -47,7 +47,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
-                <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
+                <i class="bi bi-box-arrow-in-right me-2"></i><?= lang('Crm.sign_in') ?>
             </button>
         </form>
     </div>

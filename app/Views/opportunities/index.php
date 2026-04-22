@@ -2,17 +2,17 @@
 <?= $this->section('content') ?>
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h5 class="fw-semibold mb-0"><i class="bi bi-trophy me-2 text-success"></i>Opportunities</h5>
-    <a href="/opportunities/create" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i>New Opportunity</a>
+    <h5 class="fw-semibold mb-0"><i class="bi bi-trophy me-2 text-success"></i><?= lang('Crm.opportunities') ?></h5>
+    <a href="/opportunities/create" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i><?= lang('Crm.new_opportunity') ?></a>
 </div>
 
 <?php
 $statusLabels = [
-    'new'         => ['label' => 'New',         'color' => 'primary'],
-    'in_progress' => ['label' => 'In Progress',  'color' => 'warning'],
-    'negotiation' => ['label' => 'Negotiation',  'color' => 'info'],
-    'won'         => ['label' => 'Won',          'color' => 'success'],
-    'lost'        => ['label' => 'Lost',         'color' => 'danger'],
+    'new'         => ['label' => lang('Crm.status_new'),         'color' => 'primary'],
+    'in_progress' => ['label' => lang('Crm.status_in_progress'),  'color' => 'warning'],
+    'negotiation' => ['label' => lang('Crm.status_negotiation'),  'color' => 'info'],
+    'won'         => ['label' => lang('Crm.status_won'),          'color' => 'success'],
+    'lost'        => ['label' => lang('Crm.status_lost'),         'color' => 'danger'],
 ];
 ?>
 
@@ -30,7 +30,7 @@ $statusLabels = [
                 </div>
                 <div class="card-body p-2" style="min-height:200px">
                     <?php if (empty($kanban[$status])): ?>
-                        <p class="text-center text-muted small py-3">No opportunities</p>
+                        <p class="text-center text-muted small py-3"><?= lang('Crm.no_opportunities') ?></p>
                     <?php else: ?>
                         <?php foreach ($kanban[$status] as $opp): ?>
                         <div class="card border mb-2 shadow-sm">
@@ -46,7 +46,7 @@ $statusLabels = [
                                 <?php endif; ?>
                                 <div class="d-flex gap-1 mt-2">
                                     <a href="/opportunities/<?= $opp['id'] ?>/edit" class="btn btn-sm btn-outline-secondary" style="font-size:0.7rem;padding:1px 5px"><i class="bi bi-pencil"></i></a>
-                                    <form method="post" action="/opportunities/<?= $opp['id'] ?>/delete" class="d-inline" onsubmit="return confirm('Delete?')">
+                                    <form method="post" action="/opportunities/<?= $opp['id'] ?>/delete" class="d-inline" onsubmit="return confirm('<?= lang('Crm.delete_opportunity_confirm') ?>')">
                                         <?= csrf_field() ?>
                                         <button class="btn btn-sm btn-outline-danger" style="font-size:0.7rem;padding:1px 5px"><i class="bi bi-trash"></i></button>
                                     </form>

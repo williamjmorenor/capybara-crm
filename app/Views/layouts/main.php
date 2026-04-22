@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<?= service('request')->getLocale() ?>">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= esc($title ?? 'Capybara CRM') ?> - Capybara CRM</title>
+    <title><?= esc($title ?? lang('Crm.page_title_suffix')) ?> - <?= lang('Crm.page_title_suffix') ?></title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
@@ -83,32 +83,32 @@
     <ul class="nav flex-column mt-2 pb-4">
         <li class="nav-item">
             <a class="nav-link <?= (uri_string() === 'dashboard') ? 'active' : '' ?>" href="/dashboard">
-                <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                <i class="bi bi-speedometer2 me-2"></i> <?= lang('Crm.nav_dashboard') ?>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link <?= (strpos(uri_string(), 'contacts') === 0) ? 'active' : '' ?>" href="/contacts">
-                <i class="bi bi-person-lines-fill me-2"></i> Contacts
+                <i class="bi bi-person-lines-fill me-2"></i> <?= lang('Crm.nav_contacts') ?>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link <?= (strpos(uri_string(), 'leads') === 0) ? 'active' : '' ?>" href="/leads">
-                <i class="bi bi-funnel me-2"></i> Leads
+                <i class="bi bi-funnel me-2"></i> <?= lang('Crm.nav_leads') ?>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link <?= (strpos(uri_string(), 'opportunities') === 0) ? 'active' : '' ?>" href="/opportunities">
-                <i class="bi bi-trophy me-2"></i> Opportunities
+                <i class="bi bi-trophy me-2"></i> <?= lang('Crm.nav_opportunities') ?>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link <?= (strpos(uri_string(), 'activities') === 0) ? 'active' : '' ?>" href="/activities">
-                <i class="bi bi-calendar-check me-2"></i> Activities
+                <i class="bi bi-calendar-check me-2"></i> <?= lang('Crm.nav_activities') ?>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link <?= (strpos(uri_string(), 'tags') === 0) ? 'active' : '' ?>" href="/tags">
-                <i class="bi bi-tags me-2"></i> Tags
+                <i class="bi bi-tags me-2"></i> <?= lang('Crm.nav_tags') ?>
             </a>
         </li>
     </ul>
@@ -125,7 +125,7 @@
         <div class="ms-auto d-flex align-items-center gap-2">
             <span class="text-muted small d-none d-sm-inline"><i class="bi bi-person-circle me-1"></i><?= esc(session()->get('user_name') ?? '') ?></span>
             <span class="badge bg-secondary text-uppercase small d-none d-sm-inline"><?= esc(session()->get('user_role') ?? '') ?></span>
-            <a href="/logout" class="btn btn-sm btn-outline-danger"><i class="bi bi-box-arrow-right me-1"></i>Logout</a>
+            <a href="/logout" class="btn btn-sm btn-outline-danger"><i class="bi bi-box-arrow-right me-1"></i><?= lang('Crm.logout') ?></a>
         </div>
     </nav>
 

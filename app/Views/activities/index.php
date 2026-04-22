@@ -2,8 +2,8 @@
 <?= $this->section('content') ?>
 
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h5 class="fw-semibold mb-0"><i class="bi bi-calendar-check me-2 text-info"></i>Activities</h5>
-    <a href="/activities/create" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i>New Activity</a>
+    <h5 class="fw-semibold mb-0"><i class="bi bi-calendar-check me-2 text-info"></i><?= lang('Crm.activities') ?></h5>
+    <a href="/activities/create" class="btn btn-primary btn-sm"><i class="bi bi-plus-lg me-1"></i><?= lang('Crm.new_activity') ?></a>
 </div>
 
 <div class="card border-0 shadow-sm">
@@ -11,16 +11,16 @@
         <form method="get" action="/activities" class="row g-2">
             <div class="col-sm-4">
                 <select class="form-select form-select-sm" name="type">
-                    <option value="">All types</option>
+                    <option value=""><?= lang('Crm.all_types') ?></option>
                     <?php foreach (['call', 'email', 'meeting', 'note'] as $t): ?>
-                        <option value="<?= $t ?>" <?= ($typeFilter ?? '') === $t ? 'selected' : '' ?>><?= ucfirst($t) ?></option>
+                        <option value="<?= $t ?>" <?= ($typeFilter ?? '') === $t ? 'selected' : '' ?>><?= lang('Crm.type_' . $t) ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
             <div class="col-auto">
-                <button class="btn btn-outline-secondary btn-sm" type="submit">Filter</button>
+                <button class="btn btn-outline-secondary btn-sm" type="submit"><?= lang('Crm.filter') ?></button>
                 <?php if ($typeFilter): ?>
-                    <a href="/activities" class="btn btn-outline-danger btn-sm">Clear</a>
+                    <a href="/activities" class="btn btn-outline-danger btn-sm"><?= lang('Crm.clear') ?></a>
                 <?php endif; ?>
             </div>
         </form>
@@ -28,24 +28,24 @@
     <div class="card-body p-0">
         <?php if (empty($activities)): ?>
             <div class="text-center text-muted py-5">
-                <i class="bi bi-calendar-x fs-1 d-block mb-2"></i>No activities found.
+                <i class="bi bi-calendar-x fs-1 d-block mb-2"></i><?= lang('Crm.no_activities_found') ?>
             </div>
         <?php else: ?>
             <div class="table-responsive">
                 <table class="table table-hover mb-0 align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Date</th>
-                            <th>Related</th>
-                            <th class="text-end">Actions</th>
+                            <th><?= lang('Crm.type') ?></th>
+                            <th><?= lang('Crm.description') ?></th>
+                            <th><?= lang('Crm.date') ?></th>
+                            <th><?= lang('Crm.related') ?></th>
+                            <th class="text-end"><?= lang('Crm.actions') ?></th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($activities as $activity): ?>
                         <tr>
-                            <td><span class="badge bg-secondary text-uppercase"><?= esc($activity['type']) ?></span></td>
+                            <td><span class="badge bg-secondary text-uppercase"><?= lang('Crm.type_' . $activity['type']) ?></span></td>
                             <td><?= esc(mb_strimwidth($activity['description'], 0, 80, '…')) ?></td>
                             <td class="text-muted small"><?= esc($activity['date']) ?></td>
                             <td>
@@ -56,10 +56,10 @@
                                 <?php endif; ?>
                             </td>
                             <td class="text-end">
-                                <a href="/activities/<?= $activity['id'] ?>/edit" class="btn btn-sm btn-outline-primary" title="Edit"><i class="bi bi-pencil"></i></a>
-                                <form method="post" action="/activities/<?= $activity['id'] ?>/delete" class="d-inline" onsubmit="return confirm('Delete this activity?')">
+                                <a href="/activities/<?= $activity['id'] ?>/edit" class="btn btn-sm btn-outline-primary" title="<?= lang('Crm.edit') ?>"><i class="bi bi-pencil"></i></a>
+                                <form method="post" action="/activities/<?= $activity['id'] ?>/delete" class="d-inline" onsubmit="return confirm('<?= lang('Crm.delete_activity_confirm') ?>')">
                                     <?= csrf_field() ?>
-                                    <button class="btn btn-sm btn-outline-danger" title="Delete"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-sm btn-outline-danger" title="<?= lang('Crm.delete') ?>"><i class="bi bi-trash"></i></button>
                                 </form>
                             </td>
                         </tr>

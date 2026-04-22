@@ -11,7 +11,7 @@
                 </div>
                 <div>
                     <div class="fs-2 fw-bold"><?= $totalContacts ?></div>
-                    <div class="text-muted small">Total Contacts</div>
+                    <div class="text-muted small"><?= lang('Crm.total_contacts') ?></div>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
                 </div>
                 <div>
                     <div class="fs-2 fw-bold"><?= array_sum($leadsByStatus) ?></div>
-                    <div class="text-muted small">Total Leads</div>
+                    <div class="text-muted small"><?= lang('Crm.total_leads') ?></div>
                 </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
                 </div>
                 <div>
                     <div class="fs-2 fw-bold"><?= $activeOpportunities ?></div>
-                    <div class="text-muted small">Active Opportunities</div>
+                    <div class="text-muted small"><?= lang('Crm.active_opportunities') ?></div>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                 </div>
                 <div>
                     <div class="fs-2 fw-bold"><?= count($recentActivities) ?></div>
-                    <div class="text-muted small">Recent Activities</div>
+                    <div class="text-muted small"><?= lang('Crm.recent_activities') ?></div>
                 </div>
             </div>
         </div>
@@ -62,16 +62,16 @@
     <div class="col-12">
         <div class="card border-0 shadow-sm">
             <div class="card-header bg-white border-0 pt-3 pb-0">
-                <h6 class="fw-semibold mb-0"><i class="bi bi-funnel me-2 text-warning"></i>Leads by Status</h6>
+                <h6 class="fw-semibold mb-0"><i class="bi bi-funnel me-2 text-warning"></i><?= lang('Crm.leads_by_status') ?></h6>
             </div>
             <div class="card-body">
                 <div class="row g-3">
                     <?php
                     $statusConfig = [
-                        'new'       => ['label' => 'New',       'class' => 'primary'],
-                        'contacted' => ['label' => 'Contacted',  'class' => 'secondary'],
-                        'qualified' => ['label' => 'Qualified',  'class' => 'success'],
-                        'lost'      => ['label' => 'Lost',       'class' => 'danger'],
+                        'new'       => ['label' => lang('Crm.status_new'),       'class' => 'primary'],
+                        'contacted' => ['label' => lang('Crm.status_contacted'),  'class' => 'secondary'],
+                        'qualified' => ['label' => lang('Crm.status_qualified'),  'class' => 'success'],
+                        'lost'      => ['label' => lang('Crm.status_lost'),       'class' => 'danger'],
                     ];
                     foreach ($leadsByStatus as $status => $count):
                         $cfg   = $statusConfig[$status];
@@ -81,7 +81,7 @@
                     <div class="col-6 col-md-3">
                         <div class="text-center p-3 rounded-3 bg-light">
                             <div class="fs-3 fw-bold text-<?= $cfg['class'] ?>"><?= $count ?></div>
-                            <div class="text-muted small text-capitalize"><?= $cfg['label'] ?></div>
+                            <div class="text-muted small"><?= $cfg['label'] ?></div>
                             <div class="progress mt-2" style="height:4px">
                                 <div class="progress-bar bg-<?= $cfg['class'] ?>" style="width:<?= $pct ?>%"></div>
                             </div>
@@ -97,23 +97,23 @@
 <!-- Recent activities -->
 <div class="card border-0 shadow-sm">
     <div class="card-header bg-white border-0 pt-3 pb-0 d-flex justify-content-between align-items-center">
-        <h6 class="fw-semibold mb-0"><i class="bi bi-calendar-check me-2 text-info"></i>Recent Activities</h6>
-        <a href="/activities" class="btn btn-sm btn-outline-secondary">View All</a>
+        <h6 class="fw-semibold mb-0"><i class="bi bi-calendar-check me-2 text-info"></i><?= lang('Crm.recent_activities') ?></h6>
+        <a href="/activities" class="btn btn-sm btn-outline-secondary"><?= lang('Crm.view_all') ?></a>
     </div>
     <div class="card-body p-0">
         <?php if (empty($recentActivities)): ?>
             <div class="text-center text-muted py-4">
-                <i class="bi bi-calendar-x fs-3 d-block mb-2"></i>No recent activities.
+                <i class="bi bi-calendar-x fs-3 d-block mb-2"></i><?= lang('Crm.no_recent_activities') ?>
             </div>
         <?php else: ?>
             <div class="table-responsive">
                 <table class="table table-hover mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Date</th>
-                            <th>Related</th>
+                            <th><?= lang('Crm.type') ?></th>
+                            <th><?= lang('Crm.description') ?></th>
+                            <th><?= lang('Crm.date') ?></th>
+                            <th><?= lang('Crm.related') ?></th>
                         </tr>
                     </thead>
                     <tbody>

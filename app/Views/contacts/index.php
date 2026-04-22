@@ -57,7 +57,7 @@
                                 <a href="/contacts/<?= $contact['id'] ?>/edit" class="btn btn-outline-primary btn-sm" title="Edit"><i class="bi bi-pencil"></i></a>
                                 <form method="post" action="/contacts/<?= $contact['id'] ?>/delete" class="d-inline" onsubmit="return confirm('Delete this contact?')">
                                     <?= csrf_field() ?>
-                                    <button class="btn btn-xs btn-outline-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></button>
+                                    <button class="btn btn-outline-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></button>
                                 </form>
                             </td>
                         </tr>

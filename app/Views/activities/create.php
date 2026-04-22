@@ -23,7 +23,7 @@
                 <div class="col-sm-6">
                     <label class="form-label fw-semibold">Date <span class="text-danger">*</span></label>
                     <input type="datetime-local" class="form-control" name="date"
-                           value="<?= esc(old('date', date('Y-m-d\TH:i'))) ?>" required>
+                           value="<?= esc(old('date', $default_date ?? '')) ?>" required>
                 </div>
             </div>
 

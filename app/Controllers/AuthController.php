@@ -6,7 +6,7 @@ use App\Models\UserModel;
 
 class AuthController extends BaseController
 {
-    public function login(): string
+    public function login()
     {
         if (session()->get('logged_in') === true) {
             return redirect()->to('/dashboard');

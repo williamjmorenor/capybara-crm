@@ -34,7 +34,10 @@ class ActivitiesController extends BaseController
 
     public function create(): string
     {
-        return view('activities/create', ['title' => 'New Activity']);
+        return view('activities/create', [
+            'title'       => 'New Activity',
+            'default_date' => date('Y-m-d\TH:i'),
+        ]);
     }
 
     public function store()

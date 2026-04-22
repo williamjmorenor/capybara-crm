@@ -1,68 +1,97 @@
-# CodeIgniter 4 Application Starter
+# Capybara CRM
 
-## What is CodeIgniter?
+A lightweight, self-hosted CRM built with **PHP 8.1+** and **CodeIgniter 4**, designed for small businesses or personal use.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+## Features
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+- **Contacts** — Full CRUD, status tracking, activity history
+- **Leads** — Pipeline management with source/status filtering, lead-to-contact conversion
+- **Opportunities** — Kanban board (New → In Progress → Negotiation → Won / Lost)
+- **Activities** — Log calls, emails, meetings, and notes linked to any entity
+- **Tags** — Flexible labeling system across all entities
+- **Dashboard** — At-a-glance stats: leads by status, active opportunities, recent activities
+- **Authentication** — Session-based login/logout with Admin and User roles
+- **Security** — CSRF protection, bcrypt password hashing, input validation
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Quick Start
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+### 1. Install dependencies
 
-## Installation & updates
+```bash
+composer install
+```
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+### 2. Configure environment
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+```bash
+cp env .env
+```
 
-## Setup
+Edit `.env` and set your database credentials:
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+```ini
+CI_ENVIRONMENT = development
 
-## Important Change with index.php
+database.default.hostname = localhost
+database.default.database = capybara_crm
+database.default.username = your_user
+database.default.password = your_password
+database.default.DBDriver = MySQLi
+```
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+Also set a base URL if needed:
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+```ini
+app.baseURL = 'http://localhost:8080/'
+```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+### 3. Run migrations and seed the database
 
-## Repository Management
+```bash
+php spark migrate
+php spark db:seed DatabaseSeeder
+```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+### 4. Start the development server
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+```bash
+php spark serve
+```
+
+Open [http://localhost:8080](http://localhost:8080) in your browser.
+
+### Default credentials
+
+| Email | Password | Role |
+|-------|----------|------|
+| admin@crm.local | Admin1234! | admin |
+
+---
+
+## Architecture
+
+```
+app/
+├── Controllers/        # HTTP layer — AuthController, DashboardController, etc.
+├── Models/             # Database layer — ContactModel, LeadModel, etc.
+├── Services/           # Business logic — LeadService (conversion), ActivityService
+├── Filters/            # Middleware — AuthFilter, AdminFilter
+├── Views/
+│   ├── layouts/        # Bootstrap 5 responsive layout + auth layout
+│   ├── dashboard/
+│   ├── contacts/
+│   ├── leads/
+│   ├── opportunities/  # Kanban board view
+│   ├── activities/
+│   ├── tags/
+│   └── auth/
+└── Database/
+    ├── Migrations/     # 7 tables: users, contacts, leads, opportunities, activities, tags, taggables
+    └── Seeds/          # Default admin user
+```
 
 ## Server Requirements
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+PHP 8.1+ with extensions: `intl`, `mbstring`, `mysqlnd`, `json`
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+> Configure your web server to point to the `public/` directory of this project.

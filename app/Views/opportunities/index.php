@@ -45,10 +45,10 @@ $statusLabels = [
                                     <div class="text-muted" style="font-size:0.75rem"><i class="bi bi-calendar3 me-1"></i><?= esc($opp['close_date']) ?></div>
                                 <?php endif; ?>
                                 <div class="d-flex gap-1 mt-2">
-                                    <a href="/opportunities/<?= $opp['id'] ?>/edit" class="btn btn-xs btn-outline-secondary" style="font-size:0.7rem;padding:1px 5px"><i class="bi bi-pencil"></i></a>
+                                    <a href="/opportunities/<?= $opp['id'] ?>/edit" class="btn btn-sm btn-outline-secondary" style="font-size:0.7rem;padding:1px 5px"><i class="bi bi-pencil"></i></a>
                                     <form method="post" action="/opportunities/<?= $opp['id'] ?>/delete" class="d-inline" onsubmit="return confirm('Delete?')">
                                         <?= csrf_field() ?>
-                                        <button class="btn btn-xs btn-outline-danger" style="font-size:0.7rem;padding:1px 5px"><i class="bi bi-trash"></i></button>
+                                        <button class="btn btn-sm btn-outline-danger" style="font-size:0.7rem;padding:1px 5px"><i class="bi bi-trash"></i></button>
                                     </form>
                                 </div>
                             </div>

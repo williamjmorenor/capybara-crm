@@ -37,7 +37,7 @@ class AuthController extends BaseController
         }
 
         if (! $user['active']) {
-            return redirect()->back()->withInput()->with('error', 'Your account is inactive.');
+            return redirect()->back()->withInput()->with('error', 'Invalid email or password.');
         }
 
         session()->set([

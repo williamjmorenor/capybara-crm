@@ -53,8 +53,8 @@
                                 </span>
                             </td>
                             <td class="text-end">
-                                <a href="/contacts/<?= $contact['id'] ?>" class="btn btn-xs btn-outline-info btn-sm" title="View"><i class="bi bi-eye"></i></a>
-                                <a href="/contacts/<?= $contact['id'] ?>/edit" class="btn btn-xs btn-outline-primary btn-sm" title="Edit"><i class="bi bi-pencil"></i></a>
+                                <a href="/contacts/<?= $contact['id'] ?>" class="btn btn-outline-info btn-sm" title="View"><i class="bi bi-eye"></i></a>
+                                <a href="/contacts/<?= $contact['id'] ?>/edit" class="btn btn-outline-primary btn-sm" title="Edit"><i class="bi bi-pencil"></i></a>
                                 <form method="post" action="/contacts/<?= $contact['id'] ?>/delete" class="d-inline" onsubmit="return confirm('Delete this contact?')">
                                     <?= csrf_field() ?>
                                     <button class="btn btn-xs btn-outline-danger btn-sm" title="Delete"><i class="bi bi-trash"></i></button>

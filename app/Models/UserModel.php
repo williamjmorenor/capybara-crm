@@ -18,7 +18,7 @@ class UserModel extends Model
         'role'  => 'required|in_list[admin,user]',
     ];
 
-    public function findByEmail(string $email): ?object
+    public function findByEmail(string $email): ?array
     {
         return $this->where('email', $email)->where('deleted_at', null)->first();
     }

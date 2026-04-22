@@ -69,7 +69,7 @@
                     <?php
                     $statusConfig = [
                         'new'       => ['label' => 'New',       'class' => 'primary'],
-                        'contacted' => ['label' => 'Contacted',  'class' => 'purple'],
+                        'contacted' => ['label' => 'Contacted',  'class' => 'secondary'],
                         'qualified' => ['label' => 'Qualified',  'class' => 'success'],
                         'lost'      => ['label' => 'Lost',       'class' => 'danger'],
                     ];
@@ -80,10 +80,10 @@
                     ?>
                     <div class="col-6 col-md-3">
                         <div class="text-center p-3 rounded-3 bg-light">
-                            <div class="fs-3 fw-bold text-<?= $cfg['class'] === 'purple' ? 'secondary' : $cfg['class'] ?>"><?= $count ?></div>
+                            <div class="fs-3 fw-bold text-<?= $cfg['class'] ?>"><?= $count ?></div>
                             <div class="text-muted small text-capitalize"><?= $cfg['label'] ?></div>
                             <div class="progress mt-2" style="height:4px">
-                                <div class="progress-bar bg-<?= $cfg['class'] === 'purple' ? 'secondary' : $cfg['class'] ?>" style="width:<?= $pct ?>%"></div>
+                                <div class="progress-bar bg-<?= $cfg['class'] ?>" style="width:<?= $pct ?>%"></div>
                             </div>
                         </div>
                     </div>

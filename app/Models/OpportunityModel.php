@@ -8,7 +8,8 @@ class OpportunityModel extends Model
 {
     protected $table         = 'opportunities';
     protected $primaryKey    = 'id';
-    protected $useTimestamps = true;
+    protected $useTimestamps  = true;
+    protected $useSoftDeletes = true;
     protected $allowedFields = ['contact_id', 'title', 'amount', 'status', 'close_date', 'notes'];
 
     protected $validationRules = [

@@ -82,32 +82,32 @@
     </div>
     <ul class="nav flex-column mt-2 pb-4">
         <li class="nav-item">
-            <a class="nav-link <?= (current_url(true)->getPath() === '/dashboard') ? 'active' : '' ?>" href="/dashboard">
+            <a class="nav-link <?= (uri_string() === 'dashboard') ? 'active' : '' ?>" href="/dashboard">
                 <i class="bi bi-speedometer2 me-2"></i> Dashboard
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= (strpos(current_url(true)->getPath(), '/contacts') === 0) ? 'active' : '' ?>" href="/contacts">
+            <a class="nav-link <?= (strpos(uri_string(), 'contacts') === 0) ? 'active' : '' ?>" href="/contacts">
                 <i class="bi bi-person-lines-fill me-2"></i> Contacts
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= (strpos(current_url(true)->getPath(), '/leads') === 0) ? 'active' : '' ?>" href="/leads">
+            <a class="nav-link <?= (strpos(uri_string(), 'leads') === 0) ? 'active' : '' ?>" href="/leads">
                 <i class="bi bi-funnel me-2"></i> Leads
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= (strpos(current_url(true)->getPath(), '/opportunities') === 0) ? 'active' : '' ?>" href="/opportunities">
+            <a class="nav-link <?= (strpos(uri_string(), 'opportunities') === 0) ? 'active' : '' ?>" href="/opportunities">
                 <i class="bi bi-trophy me-2"></i> Opportunities
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= (strpos(current_url(true)->getPath(), '/activities') === 0) ? 'active' : '' ?>" href="/activities">
+            <a class="nav-link <?= (strpos(uri_string(), 'activities') === 0) ? 'active' : '' ?>" href="/activities">
                 <i class="bi bi-calendar-check me-2"></i> Activities
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link <?= (strpos(current_url(true)->getPath(), '/tags') === 0) ? 'active' : '' ?>" href="/tags">
+            <a class="nav-link <?= (strpos(uri_string(), 'tags') === 0) ? 'active' : '' ?>" href="/tags">
                 <i class="bi bi-tags me-2"></i> Tags
             </a>
         </li>

@@ -26,23 +26,52 @@ A lightweight, self-hosted CRM built with **PHP 8.1+** and **CodeIgniter 4**, de
 |-------------|---------|
 | PHP | 8.1 or higher |
 | Composer | 2.x |
-| MySQL | 5.7+ / 8.x  *(or MariaDB 10.4+)* |
+| MySQL | 5.7+ / 8.x  *(or MariaDB 10.4+, recommended for production)* |
+| SQLite | 3.x *(optional for lightweight local development)* |
 | Web server | Apache 2.4+ or Nginx 1.18+ *(or built-in PHP dev server)* |
 
 **Required PHP extensions:**
 
 | Extension | Purpose |
 |-----------|---------|
+| `dom` | XML/DOM support (required by PHPUnit) |
 | `intl` | Locale / language support |
 | `mbstring` | Multi-byte string handling |
 | `mysqlnd` | MySQL native driver |
+| `pdo_sqlite` / `sqlite3` | SQLite driver (optional for local dev) |
 | `json` | JSON encode/decode |
 | `curl` | HTTP client (optional) |
 
 Check your extensions:
 
 ```bash
-php -m | grep -E 'intl|mbstring|mysqlnd|json'
+php -m | grep -E 'dom|intl|mbstring|mysqlnd|sqlite3|pdo_sqlite|json|curl'
+```
+
+### Ubuntu / Dev Container Troubleshooting
+
+If you get this error:
+
+```text
+php: /lib/x86_64-linux-gnu/libcrypto.so.1.1: version `OPENSSL_1_1_1' not found (required by php)
+```
+
+your shell is likely resolving `php` to an older preinstalled binary. Use the system PHP and required extensions:
+
+```bash
+sudo apt-get update -y
+sudo apt-get install -y php-cli php8.3-xml php8.3-intl php8.3-mbstring php8.3-curl php8.3-sqlite3
+
+# Optional for some Codespaces/dev containers where PATH points to ~/.php/current
+ln -sfn /usr /home/codespace/.php/current
+```
+
+Then verify:
+
+```bash
+php -v
+php --ini
+php -m | grep -E 'dom|intl|mbstring|curl|sqlite3|pdo_sqlite'
 ```
 
 ### 1. Clone and install Composer dependencies
@@ -59,12 +88,14 @@ composer install
 cp env .env
 ```
 
-Edit `.env` and set at minimum:
+Edit `.env` and choose one database option.
+
+Option A (MySQL / MariaDB):
 
 ```ini
 CI_ENVIRONMENT = development
 
-app.baseURL = 'http://localhost:8080/'
+app.baseURL = ''
 
 database.default.hostname = localhost
 database.default.database = capybara_crm
@@ -75,6 +106,34 @@ database.default.port     = 3306
 ```
 
 > **Tip:** Create the database first: `CREATE DATABASE capybara_crm CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
+>
+> **Codespaces tip:** Leaving `app.baseURL = ''` avoids hardcoded localhost redirects and uses the current forwarded host.
+
+Option B (SQLite, lightweight local dev):
+
+```ini
+CI_ENVIRONMENT = development
+
+app.baseURL = ''
+
+database.default.DBDriver = SQLite3
+database.default.database = /absolute/path/to/capybara-crm/writable/database.sqlite
+database.default.DBPrefix =
+```
+
+If you prefer an explicit value in Codespaces, set:
+
+```ini
+app.baseURL = 'https://<your-codespace>-8080.app.github.dev/'
+```
+
+Create the SQLite database file before migrations:
+
+```bash
+touch writable/database.sqlite
+```
+
+If you get Unable to open database file, make sure database.default.database uses an absolute path.
 
 ### 3. Run migrations and seed initial data
 

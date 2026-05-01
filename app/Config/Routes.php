@@ -44,6 +44,13 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('opportunities/(:num)/edit', 'OpportunitiesController::update/$1');
     $routes->post('opportunities/(:num)/delete', 'OpportunitiesController::delete/$1');
 
+    // Profile
+    $routes->get('profile', 'AuthController::profile');
+    $routes->post('profile', 'AuthController::profileUpdate');
+
+    // Setup (admin only)
+    $routes->get('setup', 'SetupController::index', ['filter' => 'admin']);
+
     // Activities
     $routes->get('activities', 'ActivitiesController::index');
     $routes->get('activities/create', 'ActivitiesController::create');

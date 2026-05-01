@@ -19,6 +19,8 @@ return [
     'nav_tags'         => 'Tags',
     'logout'           => 'Logout',
     'page_title_suffix'=> 'Capybara CRM',
+    'app_name'         => 'Capybara CRM',
+    'app_subtitle'     => 'Customer Relationship Manager',
 
     // ----------------------------------------------------------------
     // Auth
@@ -72,6 +74,14 @@ return [
     'status_in_progress' => 'In Progress',
     'status_negotiation' => 'Negotiation',
     'status_won'         => 'Won',
+    'setup'              => 'Setup',
+    'user_global_settings' => 'Global user configuration for the application.',
+    'setup_description'  => 'Use this page to configure global user defaults and administration settings.',
+    'default_user_role'  => 'Default User Role',
+    'default_user_role_description' => 'The role assigned to newly created users by default.',
+    'require_password_reset' => 'Require Password Reset',
+    'require_password_reset_description' => 'Force users to reset their password on next login.',
+    'setup_admin_only_note' => 'This section is only available to administrators.',
 
     // ----------------------------------------------------------------
     // Dashboard
@@ -133,6 +143,8 @@ return [
     'edit_opportunity'           => 'Edit Opportunity',
     'opportunity_details'        => 'Opportunity Details',
     'amount'                     => 'Amount ($)',
+    'profile'                    => 'My Profile',
+    'profile_password_hint'      => 'Leave blank to keep your current password.',
     'amount_label'               => 'Amount',
     'close_date'                 => 'Close Date',
     'no_opportunities'           => 'No opportunities',

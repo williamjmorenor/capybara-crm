@@ -12,6 +12,19 @@ $routes->get('login', 'AuthController::login');
 $routes->post('login', 'AuthController::loginPost');
 $routes->get('logout', 'AuthController::logout');
 
+// Client portal routes
+$routes->get('portal/login', 'ClientPortalController::login');
+$routes->post('portal/login', 'ClientPortalController::loginPost');
+$routes->get('portal/logout', 'ClientPortalController::logout');
+
+$routes->group('portal', ['filter' => 'client_portal'], function ($routes) {
+    $routes->get('tickets', 'ClientPortalController::tickets');
+    $routes->get('tickets/create', 'ClientPortalController::createTicket');
+    $routes->post('tickets/create', 'ClientPortalController::storeTicket');
+    $routes->get('tickets/(:num)', 'ClientPortalController::showTicket/$1');
+    $routes->post('tickets/(:num)/message', 'ClientPortalController::addMessage/$1');
+});
+
 // Protected routes
 $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('dashboard', 'DashboardController::index');
@@ -44,6 +57,18 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('opportunities/(:num)/edit', 'OpportunitiesController::update/$1');
     $routes->post('opportunities/(:num)/delete', 'OpportunitiesController::delete/$1');
 
+    // Tickets
+    $routes->get('tickets', 'TicketsController::index');
+    $routes->get('tickets/create', 'TicketsController::create');
+    $routes->post('tickets/create', 'TicketsController::store');
+    $routes->get('tickets/(:num)', 'TicketsController::show/$1');
+    $routes->get('tickets/(:num)/edit', 'TicketsController::edit/$1');
+    $routes->post('tickets/(:num)/edit', 'TicketsController::update/$1');
+    $routes->post('tickets/(:num)/delete', 'TicketsController::delete/$1');
+    $routes->post('tickets/(:num)/message', 'TicketsController::addMessage/$1');
+    $routes->post('tickets/(:num)/assign', 'TicketsController::assign/$1');
+    $routes->post('tickets/(:num)/opportunity', 'TicketsController::createOpportunity/$1');
+
     // Profile
     $routes->get('profile', 'AuthController::profile');
     $routes->post('profile', 'AuthController::profileUpdate');
@@ -67,3 +92,4 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->post('tags/(:num)/edit', 'TagsController::update/$1');
     $routes->post('tags/(:num)/delete', 'TagsController::delete/$1');
 });
+

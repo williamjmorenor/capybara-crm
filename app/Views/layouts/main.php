@@ -50,6 +50,11 @@
                 <i class="bi bi-tags"></i><span><span><?= lang('Crm.nav_tags') ?></span></span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link d-flex align-items-center <?= (strpos(uri_string(), 'tickets') === 0) ? 'active' : '' ?>" href="/tickets">
+                <i class="bi bi-ticket-perforated"></i><span><span><?= lang('Crm.nav_tickets') ?></span></span>
+            </a>
+        </li>
         <?php if (session()->get('user_role') === 'admin'): ?>
         <li class="nav-item">
             <a class="nav-link d-flex align-items-center <?= (uri_string() === 'setup') ? 'active' : '' ?>" href="/setup">

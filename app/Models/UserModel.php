@@ -10,7 +10,7 @@ class UserModel extends Model
     protected $primaryKey    = 'id';
     protected $useTimestamps = true;
     protected $useSoftDeletes = true;
-    protected $allowedFields = ['name', 'email', 'password', 'role', 'active'];
+    protected $allowedFields = ['name', 'email', 'password', 'role', 'type', 'active'];
 
     protected $validationRules = [
         'name'  => 'required|min_length[2]|max_length[100]',

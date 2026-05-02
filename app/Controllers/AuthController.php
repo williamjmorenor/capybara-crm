@@ -47,6 +47,11 @@ class AuthController extends BaseController
             'user_role' => $user['role'],
         ]);
 
+        if ($user['type'] === 'client') {
+            session()->destroy();
+            return redirect()->to('/portal/login')->with('error', 'Please use the Client Portal to log in.');
+        }
+
         return redirect()->to('/dashboard')->with('success', 'Welcome back, ' . $user['name'] . '!');
     }
 

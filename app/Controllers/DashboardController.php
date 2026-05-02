@@ -6,6 +6,7 @@ use App\Models\ContactModel;
 use App\Models\LeadModel;
 use App\Models\OpportunityModel;
 use App\Models\ActivityModel;
+use App\Models\TicketModel;
 
 class DashboardController extends BaseController
 {
@@ -27,12 +28,16 @@ class DashboardController extends BaseController
         $activeOpportunities   = $opportunityModel->whereIn('status', ['new', 'in_progress', 'negotiation'])->countAllResults();
         $recentActivities      = $activityModel->orderBy('date', 'DESC')->limit(5)->findAll();
 
+        $ticketModel  = new TicketModel();
+        $openTickets  = $ticketModel->whereIn('status', ['new', 'assigned'])->countAllResults();
+
         $data = [
             'title'              => 'Dashboard',
             'leadsByStatus'      => $leadsByStatus,
             'totalContacts'      => $totalContacts,
             'activeOpportunities'=> $activeOpportunities,
             'recentActivities'   => $recentActivities,
+            'openTickets'        => $openTickets,
         ];
 
         return view('dashboard/index', $data);

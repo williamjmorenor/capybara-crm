@@ -10,7 +10,7 @@ class OpportunityModel extends Model
     protected $primaryKey    = 'id';
     protected $useTimestamps  = true;
     protected $useSoftDeletes = true;
-    protected $allowedFields = ['contact_id', 'title', 'amount', 'status', 'close_date', 'notes'];
+    protected $allowedFields = ['contact_id', 'ticket_id', 'origin', 'title', 'amount', 'status', 'close_date', 'notes'];
 
     protected $validationRules = [
         'title'  => 'required|min_length[2]|max_length[200]',

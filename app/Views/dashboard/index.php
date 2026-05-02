@@ -55,6 +55,19 @@
             </div>
         </div>
     </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card border-0 shadow-sm h-100">
+            <div class="card-body d-flex align-items-center">
+                <div class="rounded-3 p-3 bg-danger bg-opacity-10 me-3">
+                    <i class="bi bi-ticket-perforated fs-3 text-danger"></i>
+                </div>
+                <div>
+                    <div class="fs-2 fw-bold"><?= $openTickets ?></div>
+                    <div class="text-muted small"><?= lang('Crm.open_tickets') ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Leads by status -->

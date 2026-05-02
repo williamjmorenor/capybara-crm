@@ -215,7 +215,6 @@ return [
     'ticket_type_incident'             => 'Incidente',
     'ticket_type_commercial'           => 'Comercial',
     'is_billable'                      => 'Facturable',
-    'status_new_ticket'                => 'Nuevo',
     'status_assigned'                  => 'Asignado',
     'status_solved'                    => 'Solucionado',
     'status_closed'                    => 'Cerrado',

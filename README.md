@@ -1,68 +1,274 @@
-# CodeIgniter 4 Application Starter
+# Capybara CRM
 
-## What is CodeIgniter?
+A lightweight, self-hosted CRM built with **PHP 8.1+** and **CodeIgniter 4**, designed for small businesses or personal use.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+[![Tests](https://github.com/williamjmorenor/capybara-crm/actions/workflows/tests.yml/badge.svg)](https://github.com/williamjmorenor/capybara-crm/actions/workflows/tests.yml)
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+## Features
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+- **Contacts** — Full CRUD, status tracking, activity history
+- **Leads** — Pipeline management with source/status filtering, lead-to-contact conversion
+- **Opportunities** — Kanban board (New → In Progress → Negotiation → Won / Lost)
+- **Activities** — Log calls, emails, meetings, and notes linked to any entity
+- **Tags** — Flexible labeling system across all entities
+- **Dashboard** — At-a-glance stats: leads by status, active opportunities, recent activities
+- **Authentication** — Session-based login/logout with Admin and User roles
+- **Security** — CSRF protection, bcrypt password hashing, input validation
+- **i18n** — All UI text marked for translation; English and Spanish included
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+---
 
-## Installation & updates
+## Developer Setup
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+### System Requirements
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+| Requirement | Version |
+|-------------|---------|
+| PHP | 8.1 or higher |
+| Composer | 2.x |
+| MySQL | 5.7+ / 8.x  *(or MariaDB 10.4+, recommended for production)* |
+| SQLite | 3.x *(optional for lightweight local development)* |
+| Web server | Apache 2.4+ or Nginx 1.18+ *(or built-in PHP dev server)* |
 
-## Setup
+**Required PHP extensions:**
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+| Extension | Purpose |
+|-----------|---------|
+| `dom` | XML/DOM support (required by PHPUnit) |
+| `intl` | Locale / language support |
+| `mbstring` | Multi-byte string handling |
+| `mysqlnd` | MySQL native driver |
+| `pdo_sqlite` / `sqlite3` | SQLite driver (optional for local dev) |
+| `json` | JSON encode/decode |
+| `curl` | HTTP client (optional) |
 
-## Important Change with index.php
+Check your extensions:
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+```bash
+php -m | grep -E 'dom|intl|mbstring|mysqlnd|sqlite3|pdo_sqlite|json|curl'
+```
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+### Ubuntu / Dev Container Troubleshooting
 
-**Please** read the user guide for a better explanation of how CI4 works!
+If you get this error:
 
-## Repository Management
+```text
+php: /lib/x86_64-linux-gnu/libcrypto.so.1.1: version `OPENSSL_1_1_1' not found (required by php)
+```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+your shell is likely resolving `php` to an older preinstalled binary. Use the system PHP and required extensions:
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+```bash
+sudo apt-get update -y
+sudo apt-get install -y php-cli php8.3-xml php8.3-intl php8.3-mbstring php8.3-curl php8.3-sqlite3
+
+# Optional for some Codespaces/dev containers where PATH points to ~/.php/current
+ln -sfn /usr /home/codespace/.php/current
+```
+
+Then verify:
+
+```bash
+php -v
+php --ini
+php -m | grep -E 'dom|intl|mbstring|curl|sqlite3|pdo_sqlite'
+```
+
+### 1. Clone and install Composer dependencies
+
+```bash
+git clone https://github.com/williamjmorenor/capybara-crm.git
+cd capybara-crm
+composer install
+```
+
+### 2. Configure the environment
+
+```bash
+cp env .env
+```
+
+Edit `.env` and choose one database option.
+
+Option A (MySQL / MariaDB):
+
+```ini
+CI_ENVIRONMENT = development
+
+app.baseURL = ''
+
+database.default.hostname = localhost
+database.default.database = capybara_crm
+database.default.username = your_db_user
+database.default.password = your_db_password
+database.default.DBDriver = MySQLi
+database.default.port     = 3306
+```
+
+> **Tip:** Create the database first: `CREATE DATABASE capybara_crm CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
+>
+> **Codespaces tip:** Leaving `app.baseURL = ''` avoids hardcoded localhost redirects and uses the current forwarded host.
+
+Option B (SQLite, lightweight local dev):
+
+```ini
+CI_ENVIRONMENT = development
+
+app.baseURL = ''
+
+database.default.DBDriver = SQLite3
+database.default.database = /absolute/path/to/capybara-crm/writable/database.sqlite
+database.default.DBPrefix =
+```
+
+If you prefer an explicit value in Codespaces, set:
+
+```ini
+app.baseURL = 'https://<your-codespace>-8080.app.github.dev/'
+```
+
+Create the SQLite database file before migrations:
+
+```bash
+touch writable/database.sqlite
+```
+
+If you get Unable to open database file, make sure database.default.database uses an absolute path.
+
+### 3. Run migrations and seed initial data
+
+```bash
+php spark migrate
+php spark db:seed DatabaseSeeder
+```
+
+This creates all 7 tables and inserts a default admin user.
+
+### 4. Start the development server
+
+```bash
+php spark serve
+```
+
+Open [http://localhost:8080](http://localhost:8080) in your browser.
+
+To bind to a different port or host:
+
+```bash
+php spark serve --host 0.0.0.0 --port 9000
+```
+
+### Default credentials
+
+| Email | Password | Role |
+|-------|----------|------|
+| admin@crm.local | Admin1234! | admin |
+
+---
+
+## Running Tests
+
+The test suite uses **PHPUnit 10**. Tests do **not** require a database connection.
+
+```bash
+# Run all tests
+composer test
+
+# Run with verbose output
+./vendor/bin/phpunit --testdox
+
+# Run a specific test file
+./vendor/bin/phpunit tests/unit/HealthTest.php
+```
+
+Test results and coverage reports are written to `build/logs/`.
+
+### Continuous Integration
+
+GitHub Actions runs the full test suite automatically on every push and pull request across PHP 8.1, 8.2, and 8.3. See [`.github/workflows/tests.yml`](.github/workflows/tests.yml).
+
+---
+
+## Internationalisation (i18n)
+
+All user-facing strings are marked with CodeIgniter's `lang()` helper.
+
+Language files live in `app/Language/{locale}/Crm.php`:
+
+| Locale | File |
+|--------|------|
+| English | `app/Language/en/Crm.php` |
+| Spanish | `app/Language/es/Crm.php` |
+
+### Changing the application language
+
+Edit `app/Config/App.php` and set the default locale:
+
+```php
+public string $defaultLocale = 'es';   // 'en' or 'es'
+public string $negotiateLocale = false;
+```
+
+### Adding a new language
+
+1. Create `app/Language/{locale}/Crm.php`
+2. Copy the key list from `app/Language/en/Crm.php`
+3. Translate the values
+
+---
+
+## Architecture
+
+```
+app/
+├── Controllers/        # HTTP layer — AuthController, DashboardController, etc.
+├── Models/             # Database layer — ContactModel, LeadModel, etc.
+├── Services/           # Business logic — LeadService (conversion), ActivityService
+├── Filters/            # Middleware — AuthFilter, AdminFilter
+├── Language/
+│   ├── en/Crm.php      # English UI strings
+│   └── es/Crm.php      # Spanish UI strings
+├── Views/
+│   ├── layouts/        # Bootstrap 5 responsive layout + auth layout
+│   ├── dashboard/
+│   ├── contacts/
+│   ├── leads/
+│   ├── opportunities/  # Kanban board view
+│   ├── activities/
+│   ├── tags/
+│   └── auth/
+└── Database/
+    ├── Migrations/     # 7 tables: users, contacts, leads, opportunities, activities, tags, taggables
+    └── Seeds/          # Default admin user
+```
+
+## Web Server Configuration
+
+Point your web server's document root to the **`public/`** directory.
+
+**Apache** — a `.htaccess` file is already included in `public/`.
+
+**Nginx** example:
+
+```nginx
+server {
+    listen 80;
+    server_name crm.local;
+    root /var/www/capybara-crm/public;
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    }
+}
+```
 
 ## Server Requirements
 
-PHP version 8.1 or higher is required, with the following extensions installed:
-
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
-
-Additionally, make sure that the following extensions are enabled in your PHP:
-
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+PHP 8.1+ with extensions: `intl`, `mbstring`, `mysqlnd`, `json`
